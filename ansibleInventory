@@ -1,0 +1,5 @@
+[qa]
+qphish1zactcc.vodacom.corp ansible_ssh_user=xib
+
+[local]
+localhost ansible_connection=local

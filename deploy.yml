@@ -1,0 +1,27 @@
+---
+- hosts: "{{ profile }}"
+  tasks:
+    - name: create app directory structure
+      file: path={{ item }} state=directory
+      with_items:
+        - /opt/apps/xib/{{ app }}
+        - /opt/apps/xib/{{ app }}/config
+        - /opt/apps/xib/{{ app }}/logs
+
+    - name: copy artifact
+      copy:
+        src: "{{ artifact }}"
+        dest: /opt/apps/xib/{{ app }}/{{ app }}.jar
+        mode: 0755
+      notify: restart app
+
+    - name: write app config file
+      template:
+        src: "{{ app }}/application.yml.j2"
+        dest: /opt/apps/xib/{{ app }}/config/application-{{ profile }}.yml
+      tags: config
+      notify: restart app
+
+  handlers:
+    - name: restart app
+      command: sudo systemctl restart {{ app }}
