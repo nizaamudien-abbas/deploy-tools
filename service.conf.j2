@@ -1,0 +1,3 @@
+BINARY="{{ app }}.jar"
+PID_FOLDER=/opt/apps/xib/{{ app }}
+JAVA_OPTS="-Dspring.profiles.active={{ profile }} -Dlogging.config=logback-spring.xml"

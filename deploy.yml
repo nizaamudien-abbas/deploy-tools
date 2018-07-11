@@ -22,6 +22,20 @@
       tags: config
       notify: restart app
 
+    - name: write log config file
+      template:
+        src: "logback-spring.xml.j2"
+        dest: /opt/apps/xib/{{ app }}/logback-spring.xml
+      tags: config
+      notify: restart app
+
+    - name: write service config file
+      template:
+        src: "service.conf.j2"
+        dest: /opt/apps/xib/{{ app }}/{{ app }}.conf
+      tags: config
+      notify: restart app
+
   handlers:
     - name: restart app
       command: sudo systemctl restart {{ app }}
